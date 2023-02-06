@@ -15,7 +15,7 @@ export function Login(props) {
         title='Log in'
         buttonText='Log in'
         linkText='Not a member yet? Sign up here!'
-        link='/signup'
+        link='signup'
         HandleEmailChange={props.onPasswordChange}
         handlePasswordChange={props.onPasswordChange}
         onSubmit={handleSubmit}

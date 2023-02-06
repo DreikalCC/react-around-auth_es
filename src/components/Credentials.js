@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 export function Credentials({
   title,
   buttonText,
@@ -33,9 +36,9 @@ export function Credentials({
           </button>
         </fieldset>
       </form>
-      <a className='credentials__link' href={link}>
+      <Link className='credentials__link' to={link}>
         {linkText}
-      </a>
+      </Link>
     </>
   );
 }

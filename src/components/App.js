@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Main } from './Main';
@@ -16,6 +16,7 @@ import { Login } from './Login';
 import { Register } from './Register';
 
 export default function App() {
+  const navigate = useNavigate();
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -122,17 +123,22 @@ export default function App() {
       .finally(closeAllPopups());
   }
   function handleLoginSubmit({ email, password }) {
-    auth
+    console.log('error clearer');
+    /*auth
       .login(email, password)
-      .then(() => {})
+      .then((res) => {
+        navigate('/main');
+      })
       .catch((err) => {
         console.log(err);
-      });
+      });*/
   }
   function handleSignupSubmit({ email, password }) {
     auth
       .register(email, password)
-      .then((res) => {})
+      .then((res) => {
+        navigate('/login');
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -160,7 +166,7 @@ export default function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Header />
-        <Switch>
+        <Routes>
           <ProtectedRoute path='/main' loggedIn={loggedIn}>
             <Main
               cards={cards}
@@ -187,9 +193,9 @@ export default function App() {
             />
           </Route>
           <Route path='/'>
-            {loggedIn ? <Redirect to='/main' /> : <Redirect to='/login' />}
+            {loggedIn ? <Navigate to='/main' /> : <Navigate to='/login' />}
           </Route>
-        </Switch>
+        </Routes>
         <ImagePopup
           image={selectedCard}
           isPopupOpen={isImagePopupOpen}

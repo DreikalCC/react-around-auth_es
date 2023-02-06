@@ -10,13 +10,12 @@ export const register = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      try {
-        if (res.status === 200) {
-          return res.json();
-        }
-      } catch (e) {
-        return e;
-      }
+      res.json();
     })
-    .catch((err) => console.log(err));
+    .then((data) => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      console.log(data);
+    });
 };
