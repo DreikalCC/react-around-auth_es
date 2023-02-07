@@ -167,17 +167,22 @@ export default function App() {
       <div className='page'>
         <Header />
         <Routes>
-          <ProtectedRoute path='/main' loggedIn={loggedIn}>
-            <Main
-              cards={cards}
-              onCardLike={handleCardLike}
-              handleCardClick={handleCardClick}
-              handleEditAvatarClick={handleEditAvatarClick}
-              handleEditProfileClick={handleEditProfileClick}
-              handleAddPlaceClick={handleAddPlaceClick}
-              handleEraseCardClick={handleEraseCardClick}
-            />
-          </ProtectedRoute>
+          <ProtectedRoute
+            path='/main'
+            loggedIn={loggedIn}
+            element={
+              <Main
+                cards={cards}
+                onCardLike={handleCardLike}
+                handleCardClick={handleCardClick}
+                handleEditAvatarClick={handleEditAvatarClick}
+                handleEditProfileClick={handleEditProfileClick}
+                handleAddPlaceClick={handleAddPlaceClick}
+                handleEraseCardClick={handleEraseCardClick}
+              />
+            }
+          />
+
           <Route path='/login'>
             <Login
               onPasswordChange={handlePasswordChange}
