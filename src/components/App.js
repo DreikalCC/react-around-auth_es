@@ -167,39 +167,52 @@ export default function App() {
       <div className='page'>
         <Header />
         <Routes>
-          <ProtectedRoute
+          <Route
             path='/main'
-            loggedIn={loggedIn}
             element={
-              <Main
-                cards={cards}
-                onCardLike={handleCardLike}
-                handleCardClick={handleCardClick}
-                handleEditAvatarClick={handleEditAvatarClick}
-                handleEditProfileClick={handleEditProfileClick}
-                handleAddPlaceClick={handleAddPlaceClick}
-                handleEraseCardClick={handleEraseCardClick}
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                element={
+                  <Main
+                    cards={cards}
+                    onCardLike={handleCardLike}
+                    handleCardClick={handleCardClick}
+                    handleEditAvatarClick={handleEditAvatarClick}
+                    handleEditProfileClick={handleEditProfileClick}
+                    handleAddPlaceClick={handleAddPlaceClick}
+                    handleEraseCardClick={handleEraseCardClick}
+                  />
+                }
+              />
+            }
+          />
+          <Route
+            path='/login'
+            element={
+              <Login
+                onPasswordChange={handlePasswordChange}
+                onEmailChange={handleEmailChange}
+                onLoginSubmit={handleLoginSubmit}
               />
             }
           />
 
-          <Route path='/login'>
-            <Login
-              onPasswordChange={handlePasswordChange}
-              onEmailChange={handleEmailChange}
-              onLoginSubmit={handleLoginSubmit}
-            />
-          </Route>
-          <Route path='/signup'>
-            <Register
-              onPasswordChange={handlePasswordChange}
-              onEmailChange={handleEmailChange}
-              onSignupSubmit={handleSignupSubmit}
-            />
-          </Route>
-          <Route path='/'>
-            {loggedIn ? <Navigate to='/main' /> : <Navigate to='/login' />}
-          </Route>
+          <Route
+            path='/signup'
+            element={
+              <Register
+                onPasswordChange={handlePasswordChange}
+                onEmailChange={handleEmailChange}
+                onSignupSubmit={handleSignupSubmit}
+              />
+            }
+          />
+          <Route
+            path='/'
+            element={
+              loggedIn ? <Navigate to='/main' /> : <Navigate to='/login' />
+            }
+          />
         </Routes>
         <ImagePopup
           image={selectedCard}
