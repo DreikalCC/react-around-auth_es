@@ -1,7 +1,7 @@
 export function InfoTooltip(props) {
   return (
     <div
-      id='image'
+      id='tooltip'
       className={props.isPopupOpen ? 'popup popup_active' : 'popup'}
     >
       <div
@@ -17,7 +17,7 @@ export function InfoTooltip(props) {
         />
         <h3 className='popup__name'>{props.image.name}</h3>
         <button
-          id='image'
+          id='tooltip'
           onClick={props.onClose}
           className='popup popup__close'
         ></button>

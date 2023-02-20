@@ -14,6 +14,7 @@ export function Header(props) {
   return (
     <header className='header'>
       <img className='header__logo' src={logo} alt='Around the US' />
+      <p>{props.email}</p>
       <button
         onClick={props.loggedIn ? signOut : logIn}
         className='header__log-btn'

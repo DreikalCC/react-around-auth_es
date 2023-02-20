@@ -36,7 +36,7 @@ export default function App() {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [loggedIn, setLoggedIn] = React.useState(true);
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState('aldo@aldo.com');
   const [password, setPassword] = React.useState('');
 
   React.useEffect(() => {
@@ -140,6 +140,8 @@ export default function App() {
     setLoggedIn(false);
     navigate('/login');
     localStorage.removeItem('jwt');
+    setEmail('');
+    setPassword('');
     console.log('out');
   }
   function handleSignupSubmit({ email, password }) {
@@ -188,7 +190,11 @@ export default function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
-        <Header handleLogoutClick={handleLogout} loggedIn={loggedIn} />
+        <Header
+          handleLogoutClick={handleLogout}
+          loggedIn={loggedIn}
+          email={email}
+        />
         <Routes>
           <Route
             path='/main'
