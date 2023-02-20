@@ -15,7 +15,7 @@ export function Register(props) {
         title='Sign up'
         buttonText='Sign up'
         linkText='Already a member? Log in here!'
-        link='login'
+        link='/login'
         onSubmit={handleSubmit}
       />
     </section>

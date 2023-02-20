@@ -20,7 +20,7 @@ export function Credentials({
             name='email'
             type='email'
             placeholder='Email'
-            className='input__form'
+            className='input__form input__form_credentials'
             onChange={HandleEmailChange}
           />
           <input
@@ -28,10 +28,13 @@ export function Credentials({
             name='password'
             type='password'
             placeholder='Password'
-            className='input__form'
+            className='input__form input__form_credentials'
             onChange={handlePasswordChange}
           />
-          <button type='submit' className='edit__submit-btn'>
+          <button
+            type='submit'
+            className='edit__submit-btn edit__submit-btn_log'
+          >
             {buttonText}
           </button>
         </fieldset>

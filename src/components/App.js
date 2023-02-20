@@ -35,7 +35,7 @@ export default function App() {
   const [link, setLink] = React.useState('');
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -50,6 +50,10 @@ export default function App() {
       });
   }, []);
 
+  React.useEffect(() => {
+    handleTokenCheck();
+  }, []);
+  ////card functions
   function handleCardLike(card) {
     console.log(deletableCard);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -59,7 +63,6 @@ export default function App() {
       });
     });
   }
-
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
@@ -71,11 +74,11 @@ export default function App() {
       )
       .finally(closeAllPopups());
   }
-
   function handleCardClick(e) {
     setSelectedCard({ name: e.target.alt, link: e.target.src });
     setIsImagePopupOpen(true);
   }
+  ////edition functions
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -98,7 +101,7 @@ export default function App() {
     setIsImagePopupOpen(false);
     setSelectedCard({ name: '', link: '' });
   }
-
+  ////updaters
   function handleUpdateUser({ name, about }) {
     api
       .postUserInfo(name, about)
@@ -107,7 +110,6 @@ export default function App() {
       })
       .finally(closeAllPopups());
   }
-
   function handleUpdateAvatar({ avatar }) {
     api
       .postUserAvatar(avatar)
@@ -122,16 +124,23 @@ export default function App() {
       .then((newCard) => setCards([newCard, ...cards]))
       .finally(closeAllPopups());
   }
+  ////registry
   function handleLoginSubmit({ email, password }) {
-    console.log('error clearer');
-    /*auth
-      .login(email, password)
+    auth
+      .authorize(email, password)
       .then((res) => {
+        setLoggedIn(true);
         navigate('/main');
       })
       .catch((err) => {
         console.log(err);
-      });*/
+      });
+  }
+  function handleLogout() {
+    setLoggedIn(false);
+    navigate('/login');
+    localStorage.removeItem('jwt');
+    console.log('out');
   }
   function handleSignupSubmit({ email, password }) {
     auth
@@ -143,6 +152,20 @@ export default function App() {
         console.log(err);
       });
   }
+  function handleTokenCheck() {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        auth.checkToken(jwt).then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate('/main');
+          }
+        });
+      }
+    }
+  }
+  ////events handlers
   function handleLocationChange(e) {
     setLocation(e.target.value);
   }
@@ -165,7 +188,7 @@ export default function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
-        <Header />
+        <Header handleLogoutClick={handleLogout} loggedIn={loggedIn} />
         <Routes>
           <Route
             path='/main'
