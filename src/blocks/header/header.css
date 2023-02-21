@@ -1,16 +1,17 @@
 .header {
+  max-width: 880px;
   height: 74px;
   padding-top: 45px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 20% 80%;
   position: relative;
+  overflow: hidden;
 }
 
-@media screen and (max-width:500px){
+@media screen and (max-width:550px){
   .header {
-    overflow-x: visible;
-    height: 56px;
+    grid-template-rows: 1fr 50px;
+    height: min-content;
     padding-top: 28px;
     width: 100%;
   }

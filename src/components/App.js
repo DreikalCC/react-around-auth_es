@@ -15,8 +15,6 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { Login } from './Login';
 import { Register } from './Register';
 import { InfoTooltip } from './InfoTooltip';
-import correct from '../images/correct.png';
-import error from '../images/error.png';
 
 export default function App() {
   const navigate = useNavigate();
@@ -28,6 +26,7 @@ export default function App() {
   const [isEraseCardPopupOpen, setEraseCardPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
+  const [isMenuOn, setIsMenuOn] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: '',
     link: '',
@@ -96,7 +95,9 @@ export default function App() {
     setDeletableCard(card);
     setEraseCardPopupOpen(true);
   }
-
+  function handleMenuClick() {
+    setIsMenuOn(true);
+  }
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -104,6 +105,7 @@ export default function App() {
     setEraseCardPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsTooltipOpen(false);
+    setIsMenuOn(false);
     setSelectedCard({ name: '', link: '' });
   }
   ////updaters
@@ -202,6 +204,9 @@ export default function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Header
+          isOpen={isMenuOn}
+          onClose={closeAllPopups}
+          handleMenuClick={handleMenuClick}
           handleLogoutClick={handleLogout}
           loggedIn={loggedIn}
           email={email}

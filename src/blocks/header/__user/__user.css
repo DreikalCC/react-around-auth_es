@@ -1,5 +1,8 @@
 .header__user{
-  position: absolute;
-  right: 80px;
-  margin: 0;
+  margin: 0 24px 0 0;
+}
+@media screen and (max-width:550px){
+  .header__user{
+    margin: 0;
+  }
 }

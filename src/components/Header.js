@@ -14,13 +14,27 @@ export function Header(props) {
   return (
     <header className='header'>
       <img className='header__logo' src={logo} alt='Around the US' />
-      <p className='header__user'>{props.email}</p>
       <button
-        onClick={props.loggedIn ? signOut : logIn}
-        className='header__log-btn'
+        onClick={props.isOpen ? props.onClose : props.handleMenuClick}
+        className={
+          props.isOpen ? 'header__menu header__menu_active' : 'header__menu'
+        }
+      ></button>
+      <div
+        className={
+          props.isOpen
+            ? 'header__user-stat header__user-stat_active'
+            : 'header__user-stat'
+        }
       >
-        {props.loggedIn ? 'Log Out' : 'Sign In'}
-      </button>
+        <p className='header__user'>{props.email}</p>
+        <button
+          onClick={props.loggedIn ? signOut : logIn}
+          className='header__log-btn'
+        >
+          {props.loggedIn ? 'Log Out' : 'Sign In'}
+        </button>
+      </div>
       <img className='header__line' src={line} alt='underline' />
     </header>
   );

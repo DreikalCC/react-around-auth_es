@@ -3,7 +3,6 @@
   border: none;
   background-color: unset;
   color: white;
-  position: absolute;
   cursor: pointer;
-  right: 0;
+  justify-self: center;
 }
