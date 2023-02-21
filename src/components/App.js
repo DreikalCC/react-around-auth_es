@@ -27,7 +27,7 @@ export default function App() {
     React.useState(false);
   const [isEraseCardPopupOpen, setEraseCardPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [isTooltipOpen, setIsTooltipOpen] = React.useState(true);
+  const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: '',
     link: '',
@@ -60,7 +60,6 @@ export default function App() {
   }, []);
   ////card functions
   function handleCardLike(card) {
-    console.log(deletableCard);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
       setCards((state) => {
@@ -137,7 +136,6 @@ export default function App() {
       .then((res) => {
         setLoggedIn(true);
         setEmail(email);
-        console.log(email);
         navigate('/main');
       })
       .catch((err) => {
@@ -150,14 +148,11 @@ export default function App() {
     localStorage.removeItem('jwt');
     setEmail('');
     setPassword('');
-    console.log('out');
   }
   function handleSignupSubmit({ email, password }) {
-    console.log(arguments);
     auth
       .register(email, password)
       .then((res) => {
-        console.log('then');
         navigate('/login');
       })
       .then(() => {
@@ -265,8 +260,6 @@ export default function App() {
           onClose={closeAllPopups}
         />
         <InfoTooltip
-          errorImg={error}
-          successImg={correct}
           isTooltipOpen={isTooltipOpen}
           onClose={closeAllPopups}
           isSuccess={success}

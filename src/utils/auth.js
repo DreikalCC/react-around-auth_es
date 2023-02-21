@@ -16,7 +16,6 @@ export const register = (email, password) => {
       if (data.error) {
         throw new Error(data.error);
       }
-      console.log(data);
     });
 };
 
@@ -30,11 +29,9 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      console.log(res);
       return res.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.user) {
         localStorage.setItem('jwt', data.jwt);
         return data;

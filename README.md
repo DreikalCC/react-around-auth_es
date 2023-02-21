@@ -1,8 +1,10 @@
-Around the U.S. project on React, featuring authorization and registration.
+En este proyecto, se implementó el registro y la autorización en el frontend del proyecto de React. "Alrededor de los EE.UU." para poder
+crear usuarios, identificarlos y crear sesiones que perduran en el registro por medio de tokens JWTs hasta que el usuario cierre la sesión.
 
-This repository will contain your own front-end project on React with added authorization and registration features.
-Start working with your previously built front end code from Sprint 11.
+Se adaptaron las rutas de la pagina para prevenir que usuarios que no han iniciado sesión puedan ingresar a estas, así como el enrutar a los
+usuarios a la pagina de inicio de sesión al intentar ingresar a las misma.
 
-All authorization, registration and token requests must go through to the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+Si el usuario no esta registrado en la base de datos el usuario tiene acceso a la ruta de registro, en la cual al registrarse se le indicará
+si se le registro de manera exitosa o si ocurrió un problema, de registrarse exitosamente se le redireccionará a la pantalla de inicio de sesión
 
-Good luck!
+npm start - Inicia la ejecución de la pagina.

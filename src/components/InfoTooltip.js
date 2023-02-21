@@ -1,3 +1,6 @@
+import correctImg from '../images/correct.png';
+import errorImg from '../images/error.png';
+
 export function InfoTooltip(props) {
   return (
     <div
@@ -12,7 +15,7 @@ export function InfoTooltip(props) {
       <div className='popup__group popup__group_itt'>
         <img
           className='popup__image popup__image_itt'
-          src={props.isSuccess ? props.successImg : props.errorImg}
+          src={props.isSuccess ? correctImg : errorImg}
           alt='icon'
         />
         <h3 className='popup__name popup__name_itt'>
