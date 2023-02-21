@@ -14,6 +14,9 @@ import { DeleteCardPopup } from './DeleteCardPopup';
 import { ProtectedRoute } from './ProtectedRoute';
 import { Login } from './Login';
 import { Register } from './Register';
+import { InfoTooltip } from './InfoTooltip';
+import correct from '../images/correct.png';
+import error from '../images/error.png';
 
 export default function App() {
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ export default function App() {
     React.useState(false);
   const [isEraseCardPopupOpen, setEraseCardPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = React.useState(true);
   const [selectedCard, setSelectedCard] = React.useState({
     name: '',
     link: '',
@@ -35,9 +39,10 @@ export default function App() {
   const [link, setLink] = React.useState('');
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [loggedIn, setLoggedIn] = React.useState(true);
-  const [email, setEmail] = React.useState('aldo@aldo.com');
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [success, setSuccess] = React.useState(false);
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -99,6 +104,7 @@ export default function App() {
     setIsAddPlacePopupOpen(false);
     setEraseCardPopupOpen(false);
     setIsImagePopupOpen(false);
+    setIsTooltipOpen(false);
     setSelectedCard({ name: '', link: '' });
   }
   ////updaters
@@ -130,6 +136,8 @@ export default function App() {
       .authorize(email, password)
       .then((res) => {
         setLoggedIn(true);
+        setEmail(email);
+        console.log(email);
         navigate('/main');
       })
       .catch((err) => {
@@ -145,12 +153,20 @@ export default function App() {
     console.log('out');
   }
   function handleSignupSubmit({ email, password }) {
+    console.log(arguments);
     auth
       .register(email, password)
       .then((res) => {
+        console.log('then');
         navigate('/login');
       })
+      .then(() => {
+        setSuccess(true);
+        setIsTooltipOpen(true);
+      })
       .catch((err) => {
+        setSuccess(false);
+        setIsTooltipOpen(true);
         console.log(err);
       });
   }
@@ -247,6 +263,13 @@ export default function App() {
           image={selectedCard}
           isPopupOpen={isImagePopupOpen}
           onClose={closeAllPopups}
+        />
+        <InfoTooltip
+          errorImg={error}
+          successImg={correct}
+          isTooltipOpen={isTooltipOpen}
+          onClose={closeAllPopups}
+          isSuccess={success}
         />
         <EditProfilePopup
           onUpdateUser={handleUpdateUser}

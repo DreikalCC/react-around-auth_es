@@ -5,8 +5,8 @@ export function Register(props) {
   function handleSubmit(e) {
     e.preventDefault();
     props.onSignupSubmit({
-      email: props.email,
-      password: props.password,
+      email: e.target.email.value,
+      password: e.target.password.value,
     });
   }
   return (

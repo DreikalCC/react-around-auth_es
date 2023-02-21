@@ -1,7 +1,7 @@
 export const BASE_URL = 'https://register.nomoreparties.co';
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}/auth/local/register`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -10,7 +10,7 @@ export const register = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      res.json();
+      return res.json();
     })
     .then((data) => {
       if (data.error) {
@@ -21,7 +21,7 @@ export const register = (email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/auth/local`, {
+  return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -30,14 +30,15 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      res.json();
+      console.log(res);
+      return res.json();
     })
     .then((data) => {
+      console.log(data);
       if (data.user) {
         localStorage.setItem('jwt', data.jwt);
         return data;
       }
-      console.log(data);
     });
 };
 
