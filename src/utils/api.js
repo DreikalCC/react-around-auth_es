@@ -1,8 +1,6 @@
 class Api {
-  constructor({ address, groupId, headers }) {
-    this.address = address;
-    this.groupId = groupId;
-    this.baseUrl = this.address + this.groupId;
+  constructor({ address, headers }) {
+    this.baseUrl = address;
     this.headers = headers;
     this.auth = this.headers.authorization;
   }
@@ -105,8 +103,7 @@ class Api {
 }
 
 const api = new Api({
-  address: 'https://around.nomoreparties.co/v1/',
-  groupId: 'web_es_cohort_02',
+  address: 'https://around.nomoreparties.co/v1/web_es_cohort_02',
   token: '04346056-dea4-4d40-8541-43203e80bf1a',
   headers: {
     authorization: '04346056-dea4-4d40-8541-43203e80bf1a',

@@ -40,10 +40,10 @@ export default function App() {
   const [description, setDescription] = React.useState('');
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
   const [success, setSuccess] = React.useState(false);
 
   React.useEffect(() => {
+    handleTokenCheck();
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, serverCards]) => {
         setCurrentUser(user);
@@ -54,9 +54,6 @@ export default function App() {
       });
   }, []);
 
-  React.useEffect(() => {
-    handleTokenCheck();
-  }, []);
   ////card functions
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -149,7 +146,6 @@ export default function App() {
     navigate('/login');
     localStorage.removeItem('jwt');
     setEmail('');
-    setPassword('');
   }
   function handleSignupSubmit({ email, password }) {
     auth
@@ -189,9 +185,6 @@ export default function App() {
   }
   function handleNameChange(e) {
     setName(e.target.value);
-  }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
   }
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -233,24 +226,12 @@ export default function App() {
           />
           <Route
             path='/login'
-            element={
-              <Login
-                onPasswordChange={handlePasswordChange}
-                onEmailChange={handleEmailChange}
-                onLoginSubmit={handleLoginSubmit}
-              />
-            }
+            element={<Login onLoginSubmit={handleLoginSubmit} />}
           />
 
           <Route
             path='/signup'
-            element={
-              <Register
-                onPasswordChange={handlePasswordChange}
-                onEmailChange={handleEmailChange}
-                onSignupSubmit={handleSignupSubmit}
-              />
-            }
+            element={<Register onSignupSubmit={handleSignupSubmit} />}
           />
           <Route
             path='/'
