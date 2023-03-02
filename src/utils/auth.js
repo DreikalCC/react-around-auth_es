@@ -29,13 +29,14 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      return res.json();
+      if(res.ok){
+        return res.json();
+      }
+      throw new Error(res.error)
     })
     .then((data) => {
-      if (data.user) {
-        localStorage.setItem('jwt', data.jwt);
-        return data;
-      }
+      localStorage.setItem('jwt', data.token);
+      return Promise.resolve(data.token);
     });
 };
 

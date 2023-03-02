@@ -44,6 +44,10 @@ export default function App() {
 
   React.useEffect(() => {
     handleTokenCheck();
+    userPromise();
+  }, []);
+
+  function userPromise(){
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, serverCards]) => {
         setCurrentUser(user);
@@ -52,8 +56,7 @@ export default function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
+  }
   ////card functions
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -132,10 +135,15 @@ export default function App() {
   function handleLoginSubmit({ email, password }) {
     auth
       .authorize(email, password)
-      .then((res) => {
+      .then(token => {
+        console.log('token', token);
+        return auth.checkToken(token)
+      })
+      .then((userResponse) => {
         setLoggedIn(true);
         setEmail(email);
         navigate('/main');
+        userPromise();
       })
       .catch((err) => {
         console.log(err);
