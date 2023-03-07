@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCallback } from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -41,11 +42,22 @@ export default function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [success, setSuccess] = React.useState(false);
+  const handleTokenCheckMemo = useCallback(()=>{
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          navigate('/main');
+        }
+      });
+    }
+  },[])
 
   React.useEffect(() => {
-    handleTokenCheck();
+    handleTokenCheckMemo();
     userPromise();
-  }, [handleTokenCheck]);
+  }, [handleTokenCheckMemo]);
 
   function userPromise() {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -170,17 +182,7 @@ export default function App() {
         console.log(err);
       });
   }
-  function handleTokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.checkToken(jwt).then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          navigate('/main');
-        }
-      });
-    }
-  }
+  
   ////events handlers
   function handleLocationChange(e) {
     setLocation(e.target.value);
