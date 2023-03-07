@@ -1,4 +1,4 @@
-.header__menu{
+.header__menu {
   background-image: url(../../../images/menu.png);
   background-position: center;
   background-size: cover;
@@ -9,10 +9,11 @@
   display: none;
   cursor: pointer;
   transition: all .1s linear;
-
+  border: none;
 }
-@media screen and (max-width:550px){
-  .header__menu{
+
+@media screen and (max-width:550px) {
+  .header__menu {
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 2;

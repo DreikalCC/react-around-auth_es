@@ -45,9 +45,9 @@ export default function App() {
   React.useEffect(() => {
     handleTokenCheck();
     userPromise();
-  }, []);
+  }, [handleTokenCheck]);
 
-  function userPromise(){
+  function userPromise() {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, serverCards]) => {
         setCurrentUser(user);
@@ -135,9 +135,8 @@ export default function App() {
   function handleLoginSubmit({ email, password }) {
     auth
       .authorize(email, password)
-      .then(token => {
-        console.log('token', token);
-        return auth.checkToken(token)
+      .then((token) => {
+        return auth.checkToken(token);
       })
       .then((userResponse) => {
         setLoggedIn(true);
@@ -172,16 +171,14 @@ export default function App() {
       });
   }
   function handleTokenCheck() {
-    if (localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-      if (jwt) {
-        auth.checkToken(jwt).then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            navigate('/main');
-          }
-        });
-      }
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          navigate('/main');
+        }
+      });
     }
   }
   ////events handlers
@@ -193,9 +190,6 @@ export default function App() {
   }
   function handleNameChange(e) {
     setName(e.target.value);
-  }
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
   }
   function handleDescriptionChange(e) {
     setDescription(e.target.value);
